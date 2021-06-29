@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: kafka2
-        image: gcr.io/molten-reserve-317003/broker2_image:36
+        image: gcr.io/molten-reserve-317003/broker2_image:v1
         ports:
         - containerPort: 9094
         env:

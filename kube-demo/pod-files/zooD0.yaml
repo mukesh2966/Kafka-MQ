@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: zoo0
-        image: gcr.io/molten-reserve-317003/zoo_image:1
+        image: gcr.io/molten-reserve-317003/zoo_image:v1
         ports:
         - containerPort: 2181
         - containerPort: 2182
