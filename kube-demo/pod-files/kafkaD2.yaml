@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-b2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka2
+      id: "2"
+  template:
+    metadata:
+      labels:
+        app: kafka2
+        id: "2"
+    spec:
+      containers:
+      - name: kafka2
+        image: gcr.io/molten-reserve-317003/broker2_image:36
+        ports:
+        - containerPort: 9094
+        env:
+        - name: KAFKA_CFG_LISTENERS
+          value: SASL_SSL://34.122.1.97:9094
+        - name: KAFKA_CFG_ADVERTISED_LISTENERS
+          value: SASL_SSL://34.122.1.97:9094
+        - name: KAFKA_ZOOKEEPER_PROTOCOL
+          value: SSL
