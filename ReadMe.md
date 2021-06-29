@@ -2,6 +2,10 @@
 
 #### This file is also included as docker-setup.properties in docker-demo/setup folder.
 
+#### For setting up kafka cluster in docker environment, you could either go through this ReadMe or docker-demo/setup/docker-setup.properties file.
+
+#### For setting up kafka cluster in k8s environment, you should go to kube-demo/setup/kube-setup.properties file.
+
 ###### download the kafka package kafka_2.13-2.8.0 link https://www.apache.org/dyn/closer.cgi?path=/kafka/2.8.0/kafka_2.13-2.8.0.tgz
 
 ###### that package and everything is also uploaded in the github repo
@@ -22,20 +26,34 @@
 
 ###### first we need to create the required certificates
 
-Below are the Example steps to implement CA, truststore and keystore for zookeeper SSL security :
-𝟏. 𝐆𝐞𝐧𝐞𝐫𝐚𝐭𝐞 𝐂𝐀 ==
+## Below are the Example steps to implement CA, truststore and keystore for zookeeper SSL security
+
+#### 𝟏. 𝐆𝐞𝐧𝐞𝐫𝐚𝐭𝐞 𝐂𝐀 ==
+
 openssl req -new -x509 -keyout ca-key -out ca-cert -days 3650
-𝟐. 𝐂𝐫𝐞𝐚𝐭𝐞 𝐓𝐫𝐮𝐬𝐭𝐬𝐭𝐨𝐫𝐞 ==
+
+#### 𝟐. 𝐂𝐫𝐞𝐚𝐭𝐞 𝐓𝐫𝐮𝐬𝐭𝐬𝐭𝐨𝐫𝐞 ==
+
 keytool -keystore kafka.zookeeper.truststore.jks -alias ca-cert -import -file ca-cert
-𝟑. 𝐂𝐫𝐞𝐚𝐭𝐞 𝐊𝐞𝐲𝐬𝐭𝐨𝐫𝐞 ==
+
+#### 𝟑. 𝐂𝐫𝐞𝐚𝐭𝐞 𝐊𝐞𝐲𝐬𝐭𝐨𝐫𝐞 ==
+
 keytool -keystore kafka.zookeeper.keystore.jks -alias zookeeper -validity 3650 -genkey -keyalg RSA -ext SAN=dns:localhost
-𝟒. 𝐂𝐫𝐞𝐚𝐭𝐞 𝐜𝐞𝐫𝐭𝐢𝐟𝐢𝐜𝐚𝐭𝐞 𝐬𝐢𝐠𝐧𝐢𝐧𝐠 𝐫𝐞𝐪𝐮𝐞𝐬𝐭 (𝐂𝐒𝐑) ==
+
+#### 𝟒. 𝐂𝐫𝐞𝐚𝐭𝐞 𝐜𝐞𝐫𝐭𝐢𝐟𝐢𝐜𝐚𝐭𝐞 𝐬𝐢𝐠𝐧𝐢𝐧𝐠 𝐫𝐞𝐪𝐮𝐞𝐬𝐭 (𝐂𝐒𝐑) ==
+
 keytool -keystore kafka.zookeeper.keystore.jks -alias zookeeper -certreq -file ca-request-zookeeper
-𝟓. 𝐒𝐢𝐠𝐧 𝐭𝐡𝐞 𝐂𝐒𝐑 ==
+
+#### 𝟓. 𝐒𝐢𝐠𝐧 𝐭𝐡𝐞 𝐂𝐒𝐑 ==
+
 openssl x509 -req -CA ca-cert -CAkey ca-key -in ca-request-zookeeper -out ca-signed-zookeeper -days 3650 -CAcreateserial
-𝟔. 𝐈𝐦𝐩𝐨𝐫𝐭 𝐭𝐡𝐞 𝐂𝐀 𝐢𝐧𝐭𝐨 𝐊𝐞𝐲𝐬𝐭𝐨𝐫𝐞 ==
+
+#### 𝟔. 𝐈𝐦𝐩𝐨𝐫𝐭 𝐭𝐡𝐞 𝐂𝐀 𝐢𝐧𝐭𝐨 𝐊𝐞𝐲𝐬𝐭𝐨𝐫𝐞 ==
+
 keytool -keystore kafka.zookeeper.keystore.jks -alias ca-cert -import -file ca-cert
-𝟕. 𝐈𝐦𝐩𝐨𝐫𝐭 𝐭𝐡𝐞 𝐬𝐢𝐠𝐧𝐞𝐝 𝐜𝐞𝐫𝐭𝐢𝐟𝐢𝐜𝐚𝐭𝐞 𝐢𝐧𝐭𝐨 𝐊𝐞𝐲𝐬𝐭𝐨𝐫𝐞 ==
+
+#### 𝟕. 𝐈𝐦𝐩𝐨𝐫𝐭 𝐭𝐡𝐞 𝐬𝐢𝐠𝐧𝐞𝐝 𝐜𝐞𝐫𝐭𝐢𝐟𝐢𝐜𝐚𝐭𝐞 𝐢𝐧𝐭𝐨 𝐊𝐞𝐲𝐬𝐭𝐨𝐫𝐞 ==
+
 keytool -keystore kafka.zookeeper.keystore.jks -alias zookeeper -import -file ca-signed-zookeeper
 
 ###### starting to create CA
