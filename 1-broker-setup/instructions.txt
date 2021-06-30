@@ -1,0 +1,11 @@
+This folder contains the yaml files for zookeeper and broker deployment. And also the python consumer and producer.
+
+First we need to deploy both the services.
+The kafka service will allocate us the public IP.
+Then change the advertised listerners IP in the kafkaDeploy.yaml file to the newly allocated public IP.
+Also, place that public IP in bootstrap server's argument in both consumer and producer file.
+    
+Then first launch the zookeeper deployment.
+After that the kafka deployment.
+
+This should complete the setup and the producer and cosumer script would be functional from your system.
