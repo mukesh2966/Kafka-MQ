@@ -168,6 +168,7 @@ docker run --name zookeeper-docker1 --net=host -v /home/mukesh/kube-demo4/docker
 home/mukesh/kafka_2.13-2.8.0~$ <write all commands starting with bin here>
 
 ###------check that can connect to zookeeper via zookeeper-shell
+
 bin/zookeeper-shell.sh localhost:2182 -zk-tls-config-file /home/mukesh/kube-demo4/docker-demo/config/zookeeper-client.properties
 
 ####-----------creating broker account : like any client of the cluster broker also needs a user account to be registered with zookeeper.
@@ -272,7 +273,7 @@ bin/kafka-acls.sh --authorizer-properties zookeeper.connect=localhost:2182 --zk-
 
 #############################3------------------------------configurations
 
-###### these properties are added to the respective files, if already place replace the one ones.
+###### these properties are added to the respective files, if already present there replace the default ones.
 
 SSL SPECIFIC PROPERTIES TO CONFIGURE ZOOKEEPER FOR ZOOKEEPER SECURITY:
 𝟏. inside 𝐙𝐎𝐎𝐊𝐄𝐄𝐏𝐄𝐑.𝐏𝐑𝐎𝐏𝐄𝐑𝐓𝐈𝐄𝐒 file
