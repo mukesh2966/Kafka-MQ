@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper-d0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper-0
+  template:
+    metadata:
+      labels:
+        app: zookeeper-0
+    spec:
+      containers:
+      - name: zoo0
+        image: bitnami/zookeeper
+        ports:
+        - containerPort: 2181
+        env:
+        - name: ZOO_TLS_CLIENT_AUTH
+          value: none
+        - name: ZOO_ENABLE_AUTH
+          value: "no"
+        - name: ALLOW_ANONYMOUS_LOGIN
+          value: "yes"

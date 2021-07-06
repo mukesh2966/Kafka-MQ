@@ -1,0 +1,115 @@
+---------------zookeeper
+
+ZOO_CLIENT_USER
+ZOO_CLIENT_PASSWORD
+
+
+ZOO_SERVER_USERS
+ZOO_SERVER_PASSWORDS
+
+ZOO_ENABLE_AUTH
+
+ZOO_LISTEN_ALLIPS_ENABLED
+
+ZOO_LOG_LEVEL
+
+ZOO_TLS_CLIENT_ENABLE ----set to true for encryption
+
+ZOO_TLS_PORT_NUMBER
+
+ZOO_TLS_CLIENT_KEYSTORE_FILE
+
+ZOO_TLS_CLIENT_KEYSTORE_PASSWORD
+
+ZOO_TLS_CLIENT_TRUSTSTORE_FILE
+
+ZOO_TLS_CLIENT_TRUSTSTORE_PASSWORD
+
+ZOO_TLS_CLIENT_AUTH ----set none to let the user user SASL, or need for just SSL that will be difficult
+
+----------total params-----
+------also some things to look for highlighted on the page
+
+
+
+
+-------------- broker-------------------------
+
+
+KAFKA_INTER_BROKER_USER
+KAFKA_INTER_BROKER_PASSWORD
+
+KAFKA_CFG_PORT -----deprecated now can specify directly at LISTENERS
+
+KAFKA_ZOOKEEPER_PROTOCOL
+
+KAFKA_ZOOKEEPER_USER
+KAFKA_ZOOKEEPER_PASSWORD
+
+KAFKA_ZOOKEEPER_TLS_KEYSTORE_PASSWORD
+KAFKA_ZOOKEEPER_TLS_TRUSTSTORE_PASSWORD
+
+KAFKA_ZOOKEEPER_TLS_VERIFY_HOSTNAME ---set false because the NoAuth error is probably due to host name check
+
+KAFKA_ZOOKEEPER_TLS_TYPE
+
+KAFKA_CFG_SASL_ENABLED_MECHANISMS
+
+KAFKA_CFG_SASL_MECHANISM_INTER_BROKER_PROTOCOL
+
+KAFKA_CFG_TLS_CLIENT_AUTH
+
+KAFKA_CFG_TLS_TYPE
+
+KAFKA_CLIENT_USERS
+KAFKA_CLIENT_PASSWORDS
+
+KAFKA_INTER_BROKER_USER--------Kafka inter broker communication user. Deprecated in favor of KAFKA_CLIENT_USERS
+
+KAFKA_INTER_BROKER_PASSWORD -----Deprecated in favor of KAFKA_CLIENT_PASSWORDS
+
+Additionally, any environment variable beginning with KAFKA_CFG_ will be mapped to its corresponding Kafka key.
+
+KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+
+KAFKA_CFG_BROKER_ID=1
+
+KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+
+KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+
+KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+
+KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+
+KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
+
+ports:
+-     - '9092:9092'
++     - '9093:9093'
+
+Security Part in Doc
+
+INTERNAL: used for inter-broker communications.
+CLIENT: used for coummunications with clients that are within the same network as Kafka brokers.
+
+KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:SSL,CLIENT:SASL_SSL
+KAFKA_CFG_LISTENERS=INTERNAL://:9093,CLIENT://:9092
+KAFKA_CFG_ADVERTISED_LISTENERS=INTERNAL://kafka:9093,CLIENT://kafka:9092
+KAFKA_CLIENT_USER=user
+KAFKA_CLIENT_PASSWORD=password
+
+KAFKA_CERTIFICATE_PASSWORD --- for kafka keystore and truststore files
+
+-----------------------------------------
+
+Set the Common Name or FQDN values to your Kafka container hostname, e.g. kafka.example.com. After entering this value, when prompted "What is your first and last name?", enter this value as well.
+As an alternative, you can disable host name verification setting the environment variable 
+
+KAFKA_CFG_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM to an empty string.
+
+
+
+
+
