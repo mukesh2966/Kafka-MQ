@@ -1,0 +1,4 @@
+[2021-07-09 15:51:34,695] INFO [Controller id=0 epoch=1] Sending UpdateMetadata request to brokers HashSet(0) for 0 partitions (state.change.logger)
+[2021-07-09 15:51:35,907] ERROR [Controller id=0] Received error CLUSTER_AUTHORIZATION_FAILED in UpdateMetadata response UpdateMetadataResponseData(errorCode=31) from broker 0 (state.change.logger)
+[2021-07-09 15:58:46,681] INFO [Controller id=0 epoch=1] Sending UpdateMetadata request to brokers HashSet(0) for 0 partitions (state.change.logger)
+[2021-07-09 15:58:47,654] ERROR [Controller id=0] Received error CLUSTER_AUTHORIZATION_FAILED in UpdateMetadata response UpdateMetadataResponseData(errorCode=31) from broker 0 (state.change.logger)

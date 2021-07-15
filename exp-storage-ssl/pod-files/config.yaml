@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ml-configmap
+data:
+  # property-like keys; each key maps to a simple value
+  DB_CONN_URL: "https://arrango-db-url"
+  DB_CONN_PORT: "1234"
+  DB_DATABASE: "demo-db"
+  DB_COLLECTION: "demo-collection"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ml-auth-secret
+type: kubernetes.io/basic-auth
+stringData:
+  username: base64encoded
+  password: base64encoded
