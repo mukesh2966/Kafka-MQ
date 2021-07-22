@@ -38,7 +38,7 @@ def run_producer():
     # print(topic_info.topics['ssl-topic'].partitions)
 
     for i in range(1, 10):
-        time.sleep(10)
+        # time.sleep(10)
         msg_value = {"command": "create"+str(i)}
         msg_header = {"source": b"check"}
         while True:

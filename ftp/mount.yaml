@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftp-d0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ftpd0
+  template:
+    metadata:
+      labels:
+        app: ftpd0
+    spec:
+      containers:
+      - name: ftp-c
+        image: atmoz/sftp
+        ports:
+        - containerPort: 22
+        env:
+        volumeMounts:
+        - name : config
+          mountPath: "/etc/sftp"
+          readOnly: true
+        - mountPath: "/home/"
+          name: data-ftp
+        - mountPath: "/etc/ssh/ssh_host_ed25519_key"
+          name: data-ftp
+          subPath: "ssh-keys/ssh_host_ed25519_key"
+        - mountPath: "/etc/ssh/ssh_host_rsa_key"
+          name: data-ftp
+          subPath: "ssh-keys/ssh_host_rsa_key"
+      volumes:
+        - name: config
+          configMap:
+            name: ftp-configmap
+            items:
+            - key: "users.conf"
+              path: "users.conf"
+        - name: data-ftp
+          persistentVolumeClaim:
+            claimName: data-claim-ftp
+---
