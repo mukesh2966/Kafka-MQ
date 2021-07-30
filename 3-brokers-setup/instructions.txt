@@ -1,0 +1,15 @@
+This folder contains the yaml files for kafka cluster(1 zookeeper and 3 broker). And also the python consumer and producer.
+
+The mentioned setup is for setting up 3 borker and 1 zookeeper in kubernetes, without the authentication, encryption and authorization part.(these are explored in the setup provided in kube-demo folder)
+
+First we need to deploy all the services(for both zookeeper and all brokers).
+The kafka services will allocate us the corresponding public IPs.
+Then change the advertised listerners IP in the broker0.yaml,broker1.yaml,broker2.yaml files to the newly allocated public IP.
+
+Also, place that public IP(s) in bootstrap server's argument in both consumer and producer file.
+    
+Then first launch the zookeeper deployment.
+After that the kafka deployment.
+
+This should complete the setup and the producer and cosumer script would be functional from your system.
+(for producer and consumer scripts, we have used kafka-python dependency. So, install that in your system before running the producer and consumer scripts)
